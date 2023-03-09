@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,6 +43,10 @@ public class MainActivity extends Activity {
             throw new RuntimeException(e);
         }
         copyAsset(assetManager,"first.mp3",outfile);
+        Uri uri = Uri.parse("file://" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,uri);
+        sendBroadcast(intent);
+
     }
     private boolean copyAsset(AssetManager assetManager, String name, String toPath) {
         InputStream inputStream = null;
